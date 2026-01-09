@@ -39,13 +39,38 @@ Run `python scripts/tests/test_basic.py` to check if the installation is success
 #### Language Model API
 If you don't have API keys, please follow instructions [here](colab/text_to_scene.ipynb). 
 
-Otherwise, get your Anthropic API key following the [official documentation](https://docs.anthropic.com/en/api/getting-started#accessing-the-api)
-and add it to `engine/key.py`:
+Otherwise, get your API keys and add them to `engine/key.py`:
+
 ```python
+# Anthropic API key (for Claude models)
 ANTHROPIC_API_KEY = 'YOUR_ANTHROPIC_API_KEY'
+
+# OpenAI API key (for GPT models)
+OPENAI_API_KEY = 'YOUR_OPENAI_API_KEY'
+
+# Volc Engine API key (for Volc Engine models)
+VOLC_ENGINE_API_KEY = 'YOUR_VOLC_ENGINE_API_KEY'
+
+# Aliyun Qwen API key (for Qwen models)
+ALIYUN_QWEN_API_KEY = 'YOUR_ALIYUN_QWEN_API_KEY'
 ```
 
-We recommond using Claude 3.7 Sonnet which is the default setting. You may switch to other language models [here](engine/constants.py#51).
+We recommend using Claude 3.7 Sonnet which is the default setting. You may switch to other language models [here](engine/constants.py#51). Supported models include:
+- Claude models (Anthropic)
+- GPT models (OpenAI)
+- Llama models (local)
+- Volc Engine models (ByteDance)
+- Qwen models (Aliyun)
+
+### Seed Configuration
+
+For Volc Engine models, you can configure the random seed in `engine/constants.py` to control the reproducibility of generation results:
+
+```python
+# Volc Engine seed configuration
+VOLC_ENGINE_SEED = 42  # Default seed value
+VOLC_ENGINE_SEED_RANGE = (0, 2**32 - 1)  # Seed value range
+```
 
 
 ### Text-Conditioned 3D Generation
