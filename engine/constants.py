@@ -16,6 +16,20 @@ except:
     # print("Warning: No OpenAI keys found.")
     OPENAI_API_KEY = ''
 
+# 火山引擎配置
+try:
+    from .key import VOLC_ENGINE_API_KEY
+except:
+    print("Warning: No Volc Engine keys found.")
+    VOLC_ENGINE_API_KEY = ''
+
+# 阿里云Qwen配置
+try:
+    from .key import ALIYUN_QWEN_API_KEY
+except:
+    print("Warning: No Aliyun Qwen keys found.")
+    ALIYUN_QWEN_API_KEY = ''
+
 try:
     import torch
     if torch.cuda.is_available():  # hack
@@ -48,11 +62,20 @@ else:
 # print(f'DRY_RUN={DRY_RUN}')
 
 # LLM configs
-LLM_PROVIDER: Literal['gpt', 'claude', 'llama'] = 'claude'
+LLM_PROVIDER: Literal['gpt', 'claude', 'llama', 'volc', 'qwen'] = 'claude'
 TEMPERATURE: float = 0.05
 NUM_COMPLETIONS: int = 1
 # MAX_TOKENS: int = 8192
 MAX_TOKENS: int = 16384
+
+# 火山引擎seed配置
+VOLC_ENGINE_SEED = 42  # 默认seed值
+VOLC_ENGINE_SEED_RANGE = (0, 2**32 - 1)  # seed取值范围
+
+# 阿里云Qwen配置
+QWEN_DEFAULT_MODEL = 'qwen-plus'
+QWEN_TEMPERATURE = 0.05
+QWEN_MAX_TOKENS = 16384
 
 assert 0 <= TEMPERATURE <= 1, TEMPERATURE
 if NUM_COMPLETIONS > 1:

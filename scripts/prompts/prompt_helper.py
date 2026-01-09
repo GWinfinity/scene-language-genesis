@@ -6,6 +6,18 @@ from pathlib import Path
 from engine.constants import ENGINE_MODE, PROMPT_MODE, DEBUG, LLM_PROVIDER
 from engine.utils.parsel_utils import setup_gpt
 from engine.utils.claude_client import setup_claude
+try:
+    from engine.utils.code_llama_client import setup_llama
+except:
+    setup_llama = None
+try:
+    from engine.utils.volc_engine_client import setup_volc_engine
+except:
+    setup_volc_engine = None
+try:
+    from engine.utils.qwen_client import setup_qwen
+except:
+    setup_qwen = None
 from engine.utils.execute_utils import execute_command_retries, execute_command
 import time
 
@@ -13,7 +25,16 @@ root = Path(__file__).parent.parent.absolute()
 
 
 def create_lm():
-    return {'gpt': setup_gpt, 'claude': setup_claude}[LLM_PROVIDER]()
+    lm_map = {
+        'gpt': setup_gpt,
+        'claude': setup_claude,
+        'llama': setup_llama,
+        'volc': setup_volc_engine,
+        'qwen': setup_qwen
+    }
+    if LLM_PROVIDER not in lm_map:
+        raise NotImplementedError(f"{LLM_PROVIDER=}")
+    return lm_map[LLM_PROVIDER]()
 
 
 def load_program(path: str):

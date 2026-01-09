@@ -12,6 +12,16 @@ try:
     from engine.utils.code_llama_client import setup_llama
 except:
     setup_llama = None
+
+try:
+    from engine.utils.volc_engine_client import setup_volc_engine
+except:
+    setup_volc_engine = None
+
+try:
+    from engine.utils.qwen_client import setup_qwen
+except:
+    setup_qwen = None
 from engine.utils.lm_utils import unwrap_results
 from engine.utils.execute_utils import execute_command
 from engine.constants import (
@@ -240,6 +250,18 @@ def generate(
         return results
     elif LLM_PROVIDER == "llama":
         model = setup_llama()
+        _, results = model.generate(
+            user_prompt=user_prompt, system_prompt=system_prompt, **lm_config
+        )
+        return results
+    elif LLM_PROVIDER == "volc":
+        model = setup_volc_engine()
+        _, results = model.generate(
+            user_prompt=user_prompt, system_prompt=system_prompt, **lm_config
+        )
+        return results
+    elif LLM_PROVIDER == "qwen":
+        model = setup_qwen()
         _, results = model.generate(
             user_prompt=user_prompt, system_prompt=system_prompt, **lm_config
         )

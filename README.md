@@ -169,11 +169,16 @@ You can further load the exported assets from above into a physics simulator. Be
 # pip install git+git@github.com:google-research/kubric.git
 python scripts/experimental/simulate_pybullet.py
 ```
-<!-- # Export to Genesis
-# pip install genesis open3d
-python scripts/experimental/simulate_genesis.py -->
+
+# Export to Genesis
+```bash
+# Install Genesis (assuming it's available via pip)
+pip install genesis open3d
+python scripts/experimental/simulate_genesis.py
+```
 
 <img src="logs/simulate_pybullet/test/history_animation.gif" width="25%">
+<img src="logs/simulate_genesis/test/history_animation.gif" width="25%">
 
 
 ### Codebase Details
